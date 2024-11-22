@@ -20,6 +20,7 @@ useSeoMeta({
   description: agentDescription,
   ogTitle: `Chat UI - ${agentName}`,
   ogDescription: agentDescription,
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
 });
 
 const messages = ref([]);
@@ -577,22 +578,26 @@ const handleDeleteConversation = async (conversationId) => {
         </div>
 
         <form @submit.prevent="handleSendMessage" class="flex gap-2">
-          <Input
+          <Textarea
             v-model="inputMessage"
             placeholder="Type your message..."
-            class="flex-1 text-sm md:text-base"
+            class="flex-1 min-h-[44px] resize-none"
+            :rows="1"
+            :style="{ fontSize: '16px' }"
             :disabled="isLoading"
+            @keydown.enter.prevent="handleSendMessage"
           />
           <Button
             v-if="isGenerating"
             type="button"
             variant="destructive"
+            class="h-[44px]"
             @click="stopGeneration"
           >
             <Square class="mr-2 h-4 w-4" />
             Stop
           </Button>
-          <Button v-else type="submit" :disabled="isLoading">
+          <Button v-else type="submit" :disabled="isLoading" class="h-[44px]">
             <Send class="mr-2" />
             Send
           </Button>
@@ -632,5 +637,12 @@ const handleDeleteConversation = async (conversationId) => {
    animations can be calculated correctly */
 .conversation-list-leave-active {
   position: absolute;
+}
+
+/* Add these styles */
+input,
+textarea {
+  font-size: 16px !important; /* Force minimum font size */
+  touch-action: manipulation; /* Disable double-tap zoom */
 }
 </style>
