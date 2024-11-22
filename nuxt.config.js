@@ -6,6 +6,8 @@ export default defineNuxtConfig({
       DIFY_API_KEY: process.env.DIFY_API_KEY,
       DIFY_API_URL: process.env.DIFY_API_URL,
       DIFY_USER_ID: process.env.DIFY_USER_ID,
+      AGENT_NAME: process.env.AGENT_NAME,
+      AGENT_DESCRIPTION: process.env.AGENT_DESCRIPTION,
     },
   },
   devtools: { enabled: false },

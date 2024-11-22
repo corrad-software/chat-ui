@@ -1,6 +1,7 @@
 export const useConversations = () => {
   const conversations = ref([]);
   const isLoading = ref(false);
+  const listKey = ref(0);
 
   const fetchConversations = async () => {
     const config = useRuntimeConfig();
@@ -24,6 +25,7 @@ export const useConversations = () => {
 
       const data = await response.json();
       conversations.value = data.data || [];
+      listKey.value++;
     } catch (error) {
       console.error("Error fetching conversations:", error);
     } finally {
@@ -35,5 +37,6 @@ export const useConversations = () => {
     conversations,
     isLoading,
     fetchConversations,
+    listKey,
   };
 };
