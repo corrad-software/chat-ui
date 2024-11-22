@@ -7,7 +7,7 @@ export const useConversations = () => {
     const config = useRuntimeConfig();
     const API_KEY = config.public.DIFY_API_KEY;
     const API_URL = config.public.DIFY_API_URL;
-    const USER_ID = config.public.DIFY_USER_ID;
+    const USER_ID = config.public.DIFY_USER_ID || "1";
 
     try {
       isLoading.value = true;
