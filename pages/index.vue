@@ -332,8 +332,20 @@ const handleDeleteConversation = async (conversationId) => {
 
 <template>
   <div class="flex h-screen bg-background">
-    <!-- Desktop Sidebar -->
-    <div class="w-64 border-r border-border flex flex-col">
+    <!-- Mobile header - adjust padding and z-index -->
+    <div
+      class="md:hidden fixed top-0 left-0 right-0 p-2 border-b border-border bg-background z-50"
+    >
+      <div class="flex items-center justify-between">
+        <Button variant="outline" size="icon" @click="isOpen = true">
+          <Menu class="h-4 w-4" />
+        </Button>
+        <ThemeToggle />
+      </div>
+    </div>
+
+    <!-- Desktop Sidebar - hide on mobile -->
+    <div class="hidden md:flex w-64 border-r border-border flex-col">
       <!-- Main sidebar content -->
       <div class="p-4 flex-1">
         <div class="flex items-center justify-between mb-4">
@@ -406,18 +418,6 @@ const handleDeleteConversation = async (conversationId) => {
             </p>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Mobile header -->
-    <div
-      class="md:hidden fixed top-0 left-0 right-0 p-4 border-b border-border bg-background z-10"
-    >
-      <div class="flex items-center justify-between">
-        <Button variant="outline" size="icon" @click="isOpen = true">
-          <Menu class="h-4 w-4" />
-        </Button>
-        <ThemeToggle />
       </div>
     </div>
 
@@ -504,11 +504,11 @@ const handleDeleteConversation = async (conversationId) => {
       </SheetContent>
     </Sheet>
 
-    <!-- Main Chat Area -->
-    <div class="flex-1 flex flex-col md:pt-0 pt-16">
+    <!-- Main Chat Area - adjust padding and height -->
+    <div class="flex-1 flex flex-col md:pt-0 pt-12">
       <div
         ref="chatContainer"
-        class="flex-1 overflow-y-auto p-4 space-y-4"
+        class="flex-1 overflow-y-auto p-2 md:p-4 space-y-4"
         @scroll="handleScroll"
       >
         <div class="max-w-5xl mx-auto w-full">
@@ -559,8 +559,8 @@ const handleDeleteConversation = async (conversationId) => {
         </div>
       </div>
 
-      <!-- Input Area -->
-      <div class="border-t border-border p-4">
+      <!-- Input Area - adjust padding -->
+      <div class="border-t border-border p-2 md:p-4">
         <div v-if="selectedImage" class="mb-2 relative inline-block">
           <img
             :src="imagePreviewUrl"
@@ -580,7 +580,7 @@ const handleDeleteConversation = async (conversationId) => {
           <Input
             v-model="inputMessage"
             placeholder="Type your message..."
-            class="flex-1"
+            class="flex-1 text-sm md:text-base"
             :disabled="isLoading"
           />
           <Button
@@ -603,9 +603,16 @@ const handleDeleteConversation = async (conversationId) => {
 </template>
 
 <style scoped>
+/* Update height calculation for mobile */
 .h-screen {
   height: 100vh;
-  height: 100dvh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
+  overflow: hidden; /* Prevent scrolling of main container */
+}
+
+/* Ensure mobile sheet takes full height */
+:deep(.sheet-content) {
+  height: 100dvh !important;
 }
 
 /* Transition animations */
